@@ -14,39 +14,100 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<!-- This layout defines the main screen and will display the list of weather or an error -->
-<!-- TODO (3) Replace dimension values with @dimen resources -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<!-- COMPLETED (4) Color the background and label text color appropriately -->
+<!-- COMPLETED (5) Replace dimension values with @dimen resources -->
+<!-- COMPLETED (6) Use sans-serif font family for label TextViews -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      - This RecyclerView will be responsible for displaying our list of weather data. All of  -
-      - its layout attributes should make sense to you, perhaps except for                     -
-      - android:clipToPadding="false". When we set clipToPadding to false, we are telling      -
-      - RecyclerView to not resize the over-scrolling effect that happens when you attempt to  -
-      - scroll past the end of the content.                                                    -
-      -                                                                                        -
-      - Go ahead and test it out yourself. Set clipToPadding to "true" and scroll to the very  -
-      - bottom of the list. Then, keep scrolling. You'll see the "glow" that happens. That is  -
-      - called an EdgeEffect in Android. The problem when clipToPadding is set to "true" is    -
-      - that there is a gap between the bottom of the screen and the EdgeEffect. Set           -
-      - clipToPadding to "false" again and observe how the gap is gone.                        -
-      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_forecast"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/extra_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="8dp"/>
+        android:background="@color/detail_accent_pane_background"
+        android:paddingBottom="@dimen/forecast_detail_vertical_padding"
+        android:paddingEnd="@dimen/forecast_detail_horizontal_padding"
+        android:paddingLeft="@dimen/forecast_detail_horizontal_padding"
+        android:paddingRight="@dimen/forecast_detail_horizontal_padding"
+        android:paddingStart="@dimen/forecast_detail_horizontal_padding"
+        android:paddingTop="@dimen/forecast_detail_vertical_padding">
 
+        <!-- This guideline divides the layout into a left and right half and is used for alignment -->
+        <android.support.constraint.Guideline
+            android:id="@+id/horizontal_middle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
 
-    <!-- A progress bar that will be shown to users to indicate that weather data is loading -->
-    <ProgressBar
-        android:id="@+id/pb_loading_indicator"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_gravity="center"
-        android:visibility="invisible" />
+        <!-- Humidity label -->
+        <TextView
+            android:id="@+id/humidity_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/humidity_label"
+            android:textColor="@color/detail_accent_label"
+            app:layout_constraintBottom_toTopOf="@+id/pressure_label"
+            app:layout_constraintLeft_toLeftOf="@+id/extra_details"
+            app:layout_constraintTop_toTopOf="@+id/extra_details"
+            app:layout_constraintVertical_bias="0.33"/>
 
-</FrameLayout>
+        <!-- Humidity measurement -->
+        <TextView
+            android:id="@+id/humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/humidity_label"
+            app:layout_constraintLeft_toLeftOf="@+id/horizontal_middle"
+            tools:text="38%"/>
+
+        <!-- Pressure label -->
+        <TextView
+            android:id="@+id/pressure_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/pressure_label"
+            android:textColor="@color/detail_accent_label"
+            app:layout_constraintBottom_toBottomOf="@+id/extra_details"
+            app:layout_constraintLeft_toLeftOf="@+id/extra_details"
+            app:layout_constraintTop_toTopOf="@+id/extra_details"/>
+
+        <!-- Pressure measurement -->
+        <TextView
+            android:id="@+id/pressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/pressure_label"
+            app:layout_constraintLeft_toLeftOf="@+id/horizontal_middle"
+            tools:text="995 hPa"/>
+
+        <!-- Wind label -->
+        <TextView
+            android:id="@+id/wind_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/wind_label"
+            android:textColor="@color/detail_accent_label"
+            app:layout_constraintBottom_toBottomOf="@+id/extra_details"
+            app:layout_constraintLeft_toLeftOf="@+id/extra_details"
+            app:layout_constraintTop_toBottomOf="@+id/pressure_label"
+            app:layout_constraintVertical_bias="0.65999997"/>
+
+        <!-- Wind measurement -->
+        <TextView
+            android:id="@+id/wind_measurement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/wind_label"
+            app:layout_constraintLeft_toLeftOf="@+id/horizontal_middle"
+            tools:text="4km/h NW"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
